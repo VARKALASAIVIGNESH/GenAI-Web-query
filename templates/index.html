@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI-Powered Query Hub</title>
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            background: #0a0a0a;
+            color: #d1d1d1;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: rgba(10, 10, 10, 0.95);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            font-size: 2.7em;
+            text-align: center;
+            color: #6703ff;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            text-shadow: 0 0 12px #22ff1a, 0 0 25px #22cc00;
+            margin-bottom: 25px;
+            animation: neonGlow 1.8s infinite alternate;
+        }
+        @keyframes neonGlow {
+            from { text-shadow: 0 0 8px #401aff, 0 0 15px #0029cc; }
+            to { text-shadow: 0 0 15px #ff1a1a, 0 0 30px #cc0000; }
+        }
+        input[type=text], textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px;
+            border: 1px solid #3392ff;
+            border-radius: 8px;
+            background: rgba(20, 20, 20, 0.9);
+            color: #d1d1d1;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 6px rgba(255, 0, 0, 0.2);
+        }
+        input[type=text]:focus, textarea:focus {
+            outline: none;
+            border-color: #667aff;
+            box-shadow: 0 0 15px #336dff;
+            background: rgba(40, 40, 40, 0.9);
+        }
+        input[type=submit] {
+            background: linear-gradient(90deg, #ff1a1a, #990000);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+        input[type=submit]:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+        }
+        .response-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(20, 20, 20, 0.9);
+            border-left: 5px solid #ff1a1a;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .response-box h4 {
+            color: #ff4d4d;
+            margin-bottom: 10px;
+            text-shadow: 0 0 6px #ff1a1a;
+        }
+        .history {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+        .history h3 {
+            color: #ff4d4d;
+            text-shadow: 0 0 6px #ff1a1a;
+            margin-bottom: 20px;
+        }
+        .history-item {
+            background: rgba(40, 40, 40, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .history-item:hover {
+            transform: translateY(-5px);
+            background: rgba(60, 60, 60, 0.9);
+        }
+        .timestamp {
+            color: #ff8080;
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+        label {
+            color: #d1d1d1;
+            font-weight: bold;
+            letter-spacing: 0.8px;
+        }
+        /* Subtle background animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.1) 0%, transparent 70%);
+            animation: darkPulse 9s infinite;
+            z-index: -1;
+        }
+        @keyframes darkPulse {
+            0% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.25); opacity: 0.4; }
+            100% { transform: scale(1); opacity: 0.2; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h2>AI-Powered Query Hub</h2>
+    <form method="post">
+        <label>User ID:</label>
+        <input type="text" name="user_id" required>
+        <label>Your Query:</label>
+        <input type="text" name="query" placeholder="e.g., What is python?" required>
+        <input type="submit" value="Generate">
+    </form>
+
+    {% if casual %}
+    <div class="response-box">
+        <h4>Casual Response:</h4>
+        <p>{{ casual }}</p>
+    </div>
+    {% endif %}
+
+    {% if formal %}
+    <div class="response-box">
+        <h4>Formal Response:</h4>
+        <p>{{ formal }}</p>
+    </div>
+    {% endif %}
+
+    {% if history %}
+    <div class="history">
+        <h3>Interaction History</h3>
+        {% for item in history %}
+        <div class="history-item">
+            <p><strong>Q:</strong> {{ item.query }}</p>
+            <p><strong>Casual:</strong> {{ item.casual_response }}</p>
+            <p><strong>Formal:</strong> {{ item.formal_response }}</p>
+            <p class="timestamp">{{ item.timestamp }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
